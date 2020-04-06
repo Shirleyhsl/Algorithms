@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function RandomListNode(x) {
+            this.label = x;
+            this.next = null;
+            this.random = null;
+        }
+
+        function Clone(pHead) {
+            // write code here
+            if (!pHead) return null;
+            var p = pHead;
+            while (p) {
+                var newNode = new RandomListNode(p.label);
+                newNode.next = p.next;
+                p.next = newNode;
+                p = p.next.next;
+            }
+            p = pHead;
+            while (p) {
+                var q = p.next;
+                if (p.random) q.random = p.random.next;
+                p = q.next;
+            }
+            //拆分链表
+            var newHead = pHead.next,
+                p = newHead;
+            while (p) {
+                p.next = p.next? p.next.next:null;
+                p = p.next;
+            }
+            return newHead;
+        }
+        var a = new RandomListNode(1);
+        var b = new RandomListNode(2);
+        var c = new RandomListNode(3);
+        var d = new RandomListNode(4);
+        var e = new RandomListNode(5);
+        var f = new RandomListNode(6);
+        a.next = b;
+        a.random = c;
+        b.next = c;
+        b.random = d;
+        c.next = d;
+        c.random = e;
+        d.next = e;
+        console.log(Clone(a))
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <p>树结构的代码</p>
+  <script>
+    function TreeNode(x) {
+      this.val = x;
+      this.left = null;
+      this.right = null;
+    }
+
+    function Deserialize(s) {
+      // write code here
+      if (s == '{}') return null;
+      var nodelist = s.slice(1, s.length - 1).split(',');
+      var pRoot = new TreeNode(nodelist[0]);
+      var p = pRoot;
+      var list = [pRoot];
+      var index = 0;
+      for (var i = 1, n = nodelist.length; i < n; i++) {
+        if (nodelist[i] != '#') {
+          var p = new TreeNode(nodelist[i]);
+          list[index].left = p;
+          list.push(p)
+        }
+        i++;
+        if (i < n && nodelist[i] != '#') {
+          var p = new TreeNode(nodelist[i]);
+          list[index].right = p;
+          list.push(p)
+        }
+        index++;
+      }
+      return pRoot
+    }
+    var str = "{10,5,12,#,4,7,1,2,5}"
+    var root = Deserialize(str);
+    // ------------------------------------------------------
+
+    let inorder = [];
+
+    function inoder(root) {
+      let stack = [];
+      p = root;
+      while (p || stack.length) {
+        while (p) {
+          stack.push(p);
+          p = p.left;
+        }
+        if (stack.length) {
+          p = stack.pop();
+          if (p.right) {
+            p = p.right;
+          }else{
+            p=null;
+          }
+        }
+      }
+    }
+    inoder(root);
+    console.log(inorder)
+  </script>
+
+</html>
